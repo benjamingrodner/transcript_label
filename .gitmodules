@@ -1,0 +1,3 @@
+[submodule "probe_design/scripts/hao_smfish_probe_design"]
+	path = probe_design/scripts/hao_smfish_probe_design
+	url = git@github.com:proudquartz/smfish-probe-design.git
