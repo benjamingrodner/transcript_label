@@ -1,0 +1,11 @@
+#!/bin/bash
+# get_blast_database
+# Ben Grodner
+# Purpose: get a database from the ncbi ftp
+
+# Get the ftp folder for dh5alpha e.coli
+rsync --copy-links --recursive --times --verbose rsync://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/982/435/GCA_000982435.1_ASM98243v1/* databases/dh5alpha/
+# Unzip database files for dh5alpha
+gunzip databases/dh5alpha/GCA_000982435.1_ASM98243v1/GCA_000982435.1_ASM98243v1_genomic.fna.gz
+# make a blast database
+makeblastdb -in databases/dh5alpha/GCA_000982435.1_ASM98243v1/*genomic.fna -dbtype nucl -parse_seqids
