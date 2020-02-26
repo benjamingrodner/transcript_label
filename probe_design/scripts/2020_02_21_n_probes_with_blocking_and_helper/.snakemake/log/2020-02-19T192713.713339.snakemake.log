@@ -1,0 +1,37 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 10
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	blast_probes
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	evaluate_taxon_probes
+	1	generate_full_probes
+	1	select_feature_probes
+	7
+
+[Wed Feb 19 19:27:17 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/primer3/GFP.int
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/primer3/GFP_probe_blast_complete.txt
+    jobid: 12
+    wildcards: sample=sample_005, feature=GFP
+
+[Wed Feb 19 19:27:19 2020]
+Error in rule blast_probes:
+    jobid: 12
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/primer3/GFP_probe_blast_complete.txt
+
+RuleException:
+CalledProcessError in line 275 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+Command ' set -euo pipefail;  python3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/smfish_blast_probes.py /workdir/bmg224/hiprfish/mobile_elements/probe_design/databases/e_coli_mg1655_genomic_sense_antisense_combined/custom_blast_db.fasta /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/primer3/GFP.int ' returned non-zero exit status 1.
+  File "/local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile", line 275, in __rule_blast_probes
+  File "/usr/lib64/python3.6/concurrent/futures/thread.py", line 56, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/.snakemake/log/2020-02-19T192713.713339.snakemake.log

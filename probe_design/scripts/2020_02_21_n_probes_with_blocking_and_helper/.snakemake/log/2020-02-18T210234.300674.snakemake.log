@@ -1,0 +1,47 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 10
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	generate_full_probes
+	4
+
+[Tue Feb 18 21:02:37 2020]
+rule collect_selected_probe_information:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/simulation_table_003.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/GFP_probe_selection.csv
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes_filtered.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes_summary.csv
+    jobid: 8
+    wildcards: design_id=DSGN_003
+
+python3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/smfish_collect_taxon_best_probes.py /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003 /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/simulation_table_003.csv /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes.csv /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes_filtered.csv /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes_summary.csv 0.99
+[Tue Feb 18 21:02:39 2020]
+Finished job 8.
+1 of 4 steps (25%) done
+
+[Tue Feb 18 21:02:39 2020]
+rule generate_full_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes.csv
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/full_length_probes_summary.txt
+    jobid: 2
+    wildcards: design_id=DSGN_003
+
+python3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/smfish_generate_full_probes.py /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003 /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_001/inputs/target_table_001.csv /workdir/bmg224/hiprfish/mobile_elements/probe_design/databases/e_coli_mg1655/custom_blast_db.fasta 0.99 10 15 -ps B -bs MostSimple -tc black
+[Tue Feb 18 21:02:47 2020]
+Error in rule generate_full_probes:
+    jobid: 2
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/full_length_probes_summary.txt
+
+RuleException:
+CalledProcessError in line 378 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+Command ' set -euo pipefail;  python3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/smfish_generate_full_probes.py /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003 /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_001/inputs/target_table_001.csv /workdir/bmg224/hiprfish/mobile_elements/probe_design/databases/e_coli_mg1655/custom_blast_db.fasta 0.99 10 15 -ps B -bs MostSimple -tc black ' returned non-zero exit status 1.
+  File "/local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile", line 378, in __rule_generate_full_probes
+  File "/usr/lib64/python3.6/concurrent/futures/thread.py", line 56, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/.snakemake/log/2020-02-18T210234.300674.snakemake.log

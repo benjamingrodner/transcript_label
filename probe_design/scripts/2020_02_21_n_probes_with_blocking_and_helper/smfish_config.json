@@ -1,0 +1,20 @@
+{
+    "__default__" :
+    {
+        "SCRIPTS_PATH" : "/Users/benjamingrodner/work/hiprfish/transcript_label/probe_design/scripts/hao_smfish_probe_design",
+        "DATA_DIR" : "/Users/benjamingrodner/work/hiprfish/transcript_label/probe_design/runs",
+    },
+    "blast":
+    {
+        "custom_blast" : "/Users/benjamingrodner/work/hiprfish/transcript_label/probe_design/runs/2019_12_16_mouse_gut_test/input/database/GCA_000982435.1_ASM98243v1_genomic.fasta",
+    },
+    "params":
+    {
+        "length_threshold": 50,
+        "theme_color": "black",
+    },
+    "simulations" :
+    {
+        "simulation_table" : "/Users/benjamingrodner/work/hiprfish/transcript_label/probe_design/runs/2019_12_16_mouse_gut_test/input/simulation_table_00.csv"
+    }
+}

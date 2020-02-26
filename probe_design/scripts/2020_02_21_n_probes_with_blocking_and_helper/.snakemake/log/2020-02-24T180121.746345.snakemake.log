@@ -1,0 +1,8 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+InputFunctionException in line 324 of /local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile:
+IndexError: index 0 is out of bounds for axis 0 with size 0
+Wildcards:
+design_id=DSGN_001
+feature=__snakemake_dynamic__

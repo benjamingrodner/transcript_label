@@ -1,0 +1,478 @@
+###############################################################################################################
+# HiPR-FISH : simulation of probe coverage with different design parameters
+###############################################################################################################
+
+import pandas as pd
+from Bio import SeqIO
+from Bio import Seq
+import re
+import os
+import glob
+# os.environ['OPENBLAS_NUM_THREADS'] = '1'
+# os.environ['OMP_NUM_THREADS'] = '1'
+###############################################################################################################
+# Helper functions
+###############################################################################################################
+
+def get_simulation_summary_filenames(sim_input_filename):
+    sim_output_filename = re.sub('.csv', '_results.csv', sim_input_filename)
+    return(sim_output_filename)
+
+def get_simulation_list(sim_input_filename, data_dir):
+    sim_tab = pd.read_csv(sim_input_filename)
+    design_list = sim_tab.DESIGN_ID.tolist()
+    return(design_list, sim_tab)
+
+def get_sample_directory(sim_tab, design_id, data_dir):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    sample_dir = data_dir + '/%s' % (sample)
+    return(sample_dir)
+
+def get_sim_sample(sim_tab, design_id):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    return(sample)
+
+def get_sim_mch(sim_tab, design_id):
+    mch = sim_tab[sim_tab.DESIGN_ID == design_id].MAX_CONTINUOUS_HOMOLOGY.values[0]
+    # print('mch',mch)
+    return(mch)
+
+def get_sim_mintm(sim_tab, design_id):
+    mintm = sim_tab[sim_tab.DESIGN_ID == design_id].MIN_TM.values[0]
+    # print('mintm',mintm)
+    return(mintm)
+
+def get_sim_maxtm(sim_tab, design_id):
+    maxtm = sim_tab[sim_tab.DESIGN_ID == design_id].MAX_TM.values[0]
+    # print('maxtm',maxtm)
+    return(maxtm)
+
+def get_sim_gc(sim_tab, design_id):
+    gc = sim_tab[sim_tab.DESIGN_ID == design_id].GC.values[0]
+    # print('gc',gc)
+    return(gc)
+
+def get_sim_probe_selection_method(sim_tab, design_id):
+    probe_selection_method = sim_tab[sim_tab.DESIGN_ID == design_id].PROBE_SELECTION_METHOD.values[0]
+    return(probe_selection_method)
+
+def get_sim_tpn(sim_tab, design_id):
+    tpn = sim_tab[sim_tab.DESIGN_ID == design_id].TPN.values[0]
+    return(tpn)
+
+def get_feature_probes_output_directory(sim_tab, design_id, data_dir):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    feature_probes_output_directory = '{}/{}/blast'.format(data_dir, sample)
+    return(feature_probes_output_directory)
+
+def get_blast_output_directory(sim_tab, design_id, data_dir):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    taxon_probes_output_directory = '{}/{}/primer3'.format(data_dir, sample)
+    return(taxon_blast_output_directory)
+
+def get_consensus_directory(sim_tab, design_id, data_dir):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    consensus_directory = '{}/{}/consensus'.format(data_dir, sample)
+    return(consensus_directory)
+
+def get_evaluation_directory(sim_tab, design_id, data_dir):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    evaluation_directory = '{}/{}/evaluation' % (data_dir, sample)
+    return(evaluation_directory)
+
+def get_selection_directory(sim_tab, design_id, data_dir):
+    selection_directory = '{}/simulation/{}'.format(data_dir, design_id)
+    return(selection_directory)
+
+def get_output_probes_filename(sim_tab, design_id, data_dir):
+    design_best_probes_filename = '{}/simulation/{}_taxon_best_probes.csv'.format(data_dir, design_id)
+    return(design_best_probes_filename)
+
+def get_output_probes_summary_filename(sim_tab, design_id, data_dir):
+    output_probes_summary_filename = '{}/simulation/{}_taxon_best_probes_summary.csv'.format(data_dir, design_id)
+    return(output_probes_summary_filename)
+
+def get_probe_directory(sim_tab, design_id, data_dir):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    probe_directory = '{}/{}/primer3'.format(data_dir, sample)
+    return(probe_directory)
+
+def get_probe_blast_directory(sim_tab, design_id, feature, data_dir):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    probe_blast_directory = '{}/{}/blast/{}/'.format(data_dir, sample, feature)
+    return(probe_blast_directory)
+
+def get_feature_probe_evaluation_filename(sim_tab, design_id, feature):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    feature_probe_evaluation_filename = '{}/{}/blast/{}_probe_evaluation.h5'.format(data_dir, sample, feature)
+    return(feature_probe_evaluation_filename)
+
+def get_feature_probe_evaluation_complete_filename(sim_tab, design_id, feature):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    feature_probe_evaluation_filename = '{}/{}/blast/{}_probe_evaluation_complete.txt'.format(data_dir, sample, feature)
+    return(feature_probe_evaluation_filename)
+
+def get_sim_feature_in_db(sim_tab, sample):
+    feature_in_db = sim_tab[sim_tab.SAMPLE == sample].FEATURE_IN_DB.values[0]
+    # print('feature_in_db',feature_in_db)
+    return(feature_in_db)
+
+def get_sim_molecule(sim_tab, sample):
+    molecule = sim_tab[sim_tab.SAMPLE == sample].MOLECULE.values[0]
+    return(molecule)
+
+def get_sim_molecule_dsgn_id(sim_tab, design_id):
+    molecule = sim_tab[sim_tab.DESIGN_ID == design_id].MOLECULE.values[0]
+    return(molecule)
+
+def get_target_table_filename(sim_tab, design_id):
+    sample = sim_tab[sim_tab.DESIGN_ID == design_id].SAMPLE.values[0]
+    target_table_filename = glob.glob('{}/{}/inputs/target_table*.csv'.format(data_dir, sample))[0]
+    return(target_table_filename)
+
+def get_feature_selection_level(sim_tab, design_id):
+    # print('get_feature_selection_level')
+    psl = sim_tab[sim_tab.DESIGN_ID == design_id].SELECTION_LEVEL.values[0]
+    # print(sample)
+    # target_table_filename = glob.glob('{}/{}/inputs/target_table*.csv'.format(data_dir, sample))[0]
+    # # print(target_table_filename)
+    # target_table = pd.read_csv(target_table_filename)
+    # print(target_table)
+    # psl = target_table[target_table['target_feature'] == feature]['selection_level'].values[0]
+    # print('psl',psl)
+    return(psl)
+
+def get_sim_bot(sim_tab, design_id):
+    bot = sim_tab[sim_tab.DESIGN_ID == design_id].BOT.values[0]
+    # print('bot',bot)
+    return(bot)
+
+def get_sim_bplc(sim_tab, design_id):
+    bplc = sim_tab[sim_tab.DESIGN_ID == design_id].BPLC.values[0]
+    # print('bplc',bplc)
+    return(bplc)
+
+def get_sim_barcode_selection(sim_tab, design_id):
+    barcode_selection = sim_tab[sim_tab.DESIGN_ID == design_id].BARCODESELECTION.values[0]
+    return(barcode_selection)
+
+def get_sim_primerset(sim_tab, design_id):
+    primerset = sim_tab[sim_tab.DESIGN_ID == design_id].PRIMERSET.values[0]
+    return(primerset)
+
+def get_sim_ommcht(sim_tab, design_id):
+    ommcht = sim_tab[sim_tab.DESIGN_ID == design_id].OMMCHT.values[0]
+    # print('ommcht',ommcht)
+    return(ommcht)
+
+def get_sim_num_probes(sim_tab, design_id):
+    bt = sim_tab[sim_tab.DESIGN_ID == design_id].NUM_PROBES.values[0]
+    # print('num_probes',bt)
+    return(bt)
+
+def get_sim_otgc(sim_tab, design_id):
+    otgc = sim_tab[sim_tab.DESIGN_ID == design_id].OTGC.values[0]
+    # print('otgc',otgc)
+    return(otgc)
+
+def get_sim_mt(sim_tab, design_id):
+    mt = sim_tab[sim_tab.DESIGN_ID == design_id].OTTM.values[0]
+    # print('mt',mt)
+    return(mt)
+
+
+def get_sim_bt(sim_tab, design_id):
+    bt = sim_tab[sim_tab.DESIGN_ID == design_id].BITSCORE_THRESH.values[0]
+    # print('bt',bt)
+    return(bt)
+
+def get_full_length_probes_filename(sim_tab, design_id):
+    primerset = sim_tab[sim_tab.DESIGN_ID == design_id].PRIMERSET.values[0]
+    barcode_selection = sim_tab[sim_tab.DESIGN_ID == design_id].BARCODESELECTION.values[0]
+    full_length_probes_filename = '{}/simulation/{}_primerset_{}_barcode_selection_{}_full_length_probe_sequences.txt'.format(data_dir, design_id, primerset, barcode_selection)
+    return(full_length_probes_filename)
+
+def get_full_length_blocking_probes_filename(sim_tab, design_id):
+    primerset = sim_tab[sim_tab.DESIGN_ID == design_id].PRIMERSET.values[0]
+    barcode_selection = sim_tab[sim_tab.DESIGN_ID == design_id].BARCODESELECTION.values[0]
+    full_length_blocking_probes_filename = '{}/simulation/{}_primerset_{}_barcode_selection_{}_full_length_blocking_probe_sequences.txt'.format(data_dir, design_id, primerset, barcode_selection)
+    return(full_length_blocking_probes_filename)
+
+def get_full_length_probe_sequences_list(sim_tab):
+    full_length_probe_sequences_list = []
+    for i in range(sim_tab.shape[0]):
+        design_id = sim_tab.DESIGN_ID.values[i]
+        primerset = sim_tab.PRIMERSET.values[i]
+        barcode_selection = sim_tab.BARCODESELECTION.values[i]
+        f = '{}/simulation/{}/{}_primerset_{}_barcode_selection_{}_full_length_probe_sequences.txt'.format(data_dir, design_id, design_id, primerset, barcode_selection)
+        full_length_probe_sequences_list.append(f)
+    return(full_length_probe_sequences_list)
+
+def get_full_length_blocking_probe_sequences_list(sim_tab):
+    full_length_blocking_probe_sequences_list = []
+    for i in range(sim_tab.shape[0]):
+        design_id = sim_tab.DESIGN_ID.values[i]
+        primerset = sim_tab.PRIMERSET.values[i]
+        barcode_selection = sim_tab.BARCODESELECTION.values[i]
+        f = '{}/simulation/{}/{}_primerset_{}_barcode_selection_{}_full_length_blocking_probe_sequences.txt'.format(data_dir, design_id, design_id, primerset, barcode_selection)
+        full_length_blocking_probe_sequences_list.append(f)
+    return(full_length_blocking_probe_sequences_list)
+
+def get_full_length_probe_summary_list(sim_tab):
+    full_length_probe_summary_list = []
+    for i in range(sim_tab.shape[0]):
+        design_id = sim_tab.DESIGN_ID.values[i]
+        primerset = sim_tab.PRIMERSET.values[i]
+        barcode_selection = sim_tab.BARCODESELECTION.values[i]
+        f = '{}/simulation/{}/full_length_probes_summary.txt'.format(data_dir, design_id)
+        # f = '{}/simulation/{}/{}_full_length_probes_summary.txt'.format(data_dir, design_id, design_id, primerset, barcode_selection)
+        full_length_probe_summary_list.append(f)
+    return(full_length_probe_summary_list)
+
+def get_snapegene_filename(data_dir, sample):
+    snapegene_filename = glob.glob('{}/{}/inputs/*.dna'.format(data_dir, sample))
+    return(snapegene_filename)
+
+def get_gene_sequences_filename(data_dir, sample):
+    gene_sequences_filename = glob.glob('{}/{}/inputs/*.fasta'.format(data_dir, sample))
+    return(gene_sequences_filename)
+
+# def get_custom_blast_db_filename(data_dir, sample):
+#     custom_blast_db = '{}/{}/input/custom_blast_db.fasta'.format(data_dir, sample)
+#     return(custom_blast_db)
+def get_custom_blast_db_filename(custom_blast, sample):
+    # print('get_custom_blast_db_filename')
+    # Get directory for blast database
+    if os.path.isdir(custom_blast):
+        custom_blast_db = '{}/custom_blast_db.fasta'.format(custom_blast)
+        # print(custom_blast_db)
+    else:
+        blast_db_dir = os.path.split(custom_blast)[0]
+        # print(blast_db_dir)
+        # Get filename
+        custom_blast_db = '{}/custom_blast_db.fasta'.format(blast_db_dir)
+    # print('custom_blast_db',custom_blast_db)
+    return(custom_blast_db)
+
+def get_custom_blast_db_filename_by_design_id(data_dir, sim_tab, design_id):
+    sample = sim_tab.loc[sim_tab.DESIGN_ID.values == design_id, 'SAMPLE'].values[0]
+    custom_blast_db = '{}/{}/inputs/custom_blast_db.fasta'.format(data_dir, sample)
+    return(custom_blast_db)
+
+def get_sim_primer3_dir(data_dir, sim_tab, design_id):
+    sample = sim_tab.loc[sim_tab.DESIGN_ID.values == design_id, 'SAMPLE'].values[0]
+    sim_primer3_dir = '{}/{}/primer3'.format(data_dir, sample)
+    return(sim_primer3_dir)
+
+def get_input_target_table_filename(data_dir):
+    # sample = sim_tab.loc[sim_tab.DESIGN_ID.values == design_id, 'SAMPLE'].values[0]
+    # input_dir = '{}/{}/input'.format(data_dir, sample)
+    input_target_table_filenames = glob.glob('{}/*/inputs/*.csv'.format(data_dir))[0]
+    return(input_target_table_filenames)
+
+
+
+data_dir = config['__default__']['DATA_DIR']
+sim_input_filename = config['simulations']['simulation_table']
+pipeline_version = os.path.basename(config['__default__']['SCRIPTS_PATH'])
+sim_output_filename = get_simulation_summary_filenames(sim_input_filename)
+design_list, sim_tab = get_simulation_list(sim_input_filename, data_dir)
+full_length_probe_summary_list = get_full_length_probe_summary_list(sim_tab)
+custom_blast_database = config['blast']['custom_blast']
+length_threshold = config['params']['length_threshold']
+theme_color = config['params']['theme_color']
+design_dir = ['{}/simulation/{}'.format(data_dir, dsgn) for dsgn in design_list]
+
+for dsgn_dir in design_dir:
+    if not os.path.exists(dsgn_dir):
+        os.makedirs(dsgn_dir)
+
+###############################################################################################################
+# Snake rules
+###############################################################################################################
+
+rule all:
+    input:
+        sim_output_filename
+
+rule design_probes:
+    input:
+        sample_dir = data_dir + '/{sample}'
+    output:
+        design_probe_filename = dynamic(data_dir + '/{sample}/primer3/{feature}.int')
+    threads: 1
+    params:
+        # snapegene_filename = lambda wildcards: get_snapegene_filename(data_dir, wildcards.sample),
+        gene_sequences_filename = lambda wildcards: get_gene_sequences_filename(data_dir, wildcards.sample),
+        custom_blast_db = custom_blast_database,
+        length_threshold = length_threshold,
+        feature_in_db = lambda wildcards: get_sim_feature_in_db(sim_tab, wildcards.sample),
+        molecule = lambda wildcards: get_sim_molecule(sim_tab, wildcards.sample)
+    shell:
+        "python3 {config[__default__][SCRIPTS_PATH]}/smfish_design_probes.py "
+        "{input.sample_dir} {params.custom_blast_db} "
+        # "{params.snapegene_filename} {params.custom_blast_db} "
+        "-l {params.length_threshold} "
+        "-fnid {params.feature_in_db} "
+        "-mol {params.molecule} "
+
+rule blast_probes:
+    input:
+        design_probe_filename = data_dir + '/{sample}/primer3/{feature}.int'
+    output:
+        probe_blast_complete_filename = data_dir + '/{sample}/primer3/{feature}_probe_blast_complete.txt'
+    threads: 1
+    params:
+        # blast_database = lambda wildcards: get_custom_blast_db_filename(data_dir, wildcards.sample)
+        blast_database = lambda wildcards: get_custom_blast_db_filename(custom_blast_database, wildcards.sample)
+        # blast_database = custom_blast_database
+    shell:
+        "python3 {config[__default__][SCRIPTS_PATH]}/smfish_blast_probes.py "
+        "{params.blast_database} {input.design_probe_filename}"
+
+rule evaluate_taxon_probes:
+    input:
+        design_probe_filename = data_dir + '/{sample}/primer3/{feature}.int',
+        probe_blast_complete_filename = data_dir + '/{sample}/primer3/{feature}_probe_blast_complete.txt'
+    output:
+        probe_evaluation_complete_filename = data_dir + '/{sample}/blast/{feature}_probe_evaluation_complete.txt'
+    threads: 1
+    shell:
+        "python3 -W ignore {config[__default__][SCRIPTS_PATH]}/smfish_evaluate_probes.py "
+        "{input.design_probe_filename}"
+
+rule select_feature_probes:
+    input:
+        probe_evaluation_complete_filename = lambda wildcards: get_feature_probe_evaluation_complete_filename(sim_tab, wildcards.design_id, wildcards.feature)
+    output:
+        feature_design_evaluation_filename = data_dir + '/simulation/{design_id}/{feature}_probe_selection.csv'
+    threads: 1
+    params:
+        # tpn = lambda wildcards: get_sim_tpn(sim_tab, wildcards.design_id),
+        bot = lambda wildcards: get_sim_bot(sim_tab, wildcards.design_id),
+        # probe_selection_method = lambda wildcards: get_sim_probe_selection_method(sim_tab, wildcards.design_id),
+        min_tm = lambda wildcards: get_sim_mintm(sim_tab, wildcards.design_id),
+        max_tm = lambda wildcards: get_sim_maxtm(sim_tab, wildcards.design_id),
+        gc = lambda wildcards: get_sim_gc(sim_tab, wildcards.design_id),
+        mch = lambda wildcards: get_sim_mch(sim_tab, wildcards.design_id),
+        bt = lambda wildcards: get_sim_bt(sim_tab, wildcards.design_id),
+        num_probes = lambda wildcards: get_sim_num_probes(sim_tab, wildcards.design_id),
+        otgc = lambda wildcards: get_sim_otgc(sim_tab, wildcards.design_id),
+        mt = lambda wildcards: get_sim_mt(sim_tab, wildcards.design_id),
+        psl = lambda wildcards: get_feature_selection_level(sim_tab, wildcards.design_id),
+        total_transcript_table = lambda wildcards: get_custom_blast_db_filename(custom_blast_database, wildcards.design_id)
+    shell:
+        "python3 {config[__default__][SCRIPTS_PATH]}/hiprfish_select_probes.py "
+        "{input.probe_evaluation_complete_filename} {wildcards.design_id} {output.feature_design_evaluation_filename} "
+        # "-c {params.probe_selection_method} "
+        "-tmin {params.min_tm} "
+        "-tmax {params.max_tm} "
+        "-m {params.mch} "
+        "-n {params.num_probes} "
+        # "-tpn {params.tpn} "
+        "-gc {params.gc} "
+        "-bt {params.bt} "
+        "-bot {params.bot} "
+        "-otgc {params.otgc} "
+        "-mt {params.mt} "
+        "-psl {params.psl} "
+        "-ttt {params.total_transcript_table}"
+# rule select_feature_probes:
+#     input:
+#         probe_evaluation_complete_filename = lambda wildcards: get_taxon_probe_evaluation_complete_filename(sim_tab, wildcards.design_id, wildcards.feature)
+#     output:
+#         taxon_design_evaluation_filename = data_dir + '/simulation/{design_id}/{feature}_probe_selection.csv'
+#     threads: 1
+#     params:
+#         bot = lambda wildcards: get_sim_bot(sim_tab, wildcards.design_id),
+#         probe_selection_method = lambda wildcards: get_sim_probe_selection_method(sim_tab, wildcards.design_id),
+#         target_rank = lambda wildcards: get_sim_target_rank(sim_tab, wildcards.design_id),
+#         min_tm = lambda wildcards: get_sim_mintm(sim_tab, wildcards.design_id),
+#         max_tm = lambda wildcards: get_sim_maxtm(sim_tab, wildcards.design_id),
+#         gc = lambda wildcards: get_sim_gc(sim_tab, wildcards.design_id),
+#         mch = lambda wildcards: get_sim_mch(sim_tab, wildcards.design_id),
+#         bt = lambda wildcards: get_sim_bt(sim_tab, wildcards.design_id)
+#     shell:
+#         "python3 {config[__default__][SCRIPTS_PATH]}/hiprfish_select_probes.py "
+#         "{input.probe_evaluation_complete_filename} {wildcards.design_id} {output.taxon_design_evaluation_filename} "
+#         "-t {params.target_rank} "
+#         "-tmin {params.min_tm} "
+#         "-tmax {params.max_tm} "
+#         "-m {params.mch} "
+#         "-gc {params.gc} "
+#         "-bot {params.bot} "
+#         "-bt {params.bt}"
+
+rule collect_selected_probe_information:
+    input:
+        sim_filename = sim_input_filename,
+        design_directory = data_dir + '/simulation/{design_id}',
+        feature_evaluation_filename_list = dynamic(data_dir + '/simulation/{design_id}/{feature}_probe_selection.csv')
+    output:
+        feature_best_probes_filename = data_dir + '/simulation/{design_id}/feature_best_probes.csv',
+        feature_best_probes_filtered_filename = data_dir + '/simulation/{design_id}/feature_best_probes_filtered.csv',
+        probes_summary_filename = data_dir + '/simulation/{design_id}/feature_best_probes_summary.csv'
+    threads: 1
+    params:
+        bot = lambda wildcards: get_sim_bot(sim_tab, wildcards.design_id)
+    shell:
+        "python3 {config[__default__][SCRIPTS_PATH]}/smfish_collect_taxon_best_probes.py "
+        "{input.design_directory} {input.sim_filename} "
+        "{output.feature_best_probes_filename} {output.feature_best_probes_filtered_filename} {output.probes_summary_filename} {params.bot} "
+
+rule generate_full_probes:
+    input:
+        taxon_best_probes_filename = data_dir + '/simulation/{design_id}/feature_best_probes.csv',
+    output:
+        full_length_probe_summary_filename = data_dir + '/simulation/{design_id}/full_length_probes_summary.txt'
+    threads: 1
+    params:
+        design_dir = data_dir + '/simulation/{design_id}',
+        # blast_database = lambda wildcards: get_custom_blast_db_filename_by_design_id(data_dir, sim_tab, wildcards.design_id),
+        blast_database = lambda wildcards: get_custom_blast_db_filename(custom_blast_database, wildcards.design_id),
+        input_target_table_filename = lambda wildcards: get_target_table_filename(sim_tab, wildcards.design_id),
+        # blast_database = custom_blast_database,
+        # input_target_table_filenames = lambda wildcards: get_input_target_table_filename(data_dir),
+        sim_primer3_dir = lambda wildcards: get_sim_primer3_dir(data_dir, sim_tab, wildcards.design_id),
+        bot = lambda wildcards: get_sim_bot(sim_tab, wildcards.design_id),
+        mch = lambda wildcards: get_sim_mch(sim_tab, wildcards.design_id),
+        bplc = lambda wildcards: get_sim_bplc(sim_tab, wildcards.design_id),
+        primerset = lambda wildcards: get_sim_primerset(sim_tab, wildcards.design_id),
+        barcode_selection = lambda wildcards: get_sim_barcode_selection(sim_tab, wildcards.design_id),
+        theme_color = theme_color,
+        bt = lambda wildcards: get_sim_bt(sim_tab, wildcards.design_id),
+        otgc = lambda wildcards: get_sim_otgc(sim_tab, wildcards.design_id),
+        mt = lambda wildcards: get_sim_mt(sim_tab, wildcards.design_id),
+        total_transcript_table = lambda wildcards: get_custom_blast_db_filename(custom_blast_database, wildcards.design_id),
+        psl = lambda wildcards: get_feature_selection_level(sim_tab, wildcards.design_id),
+        molecule = lambda wildcards: get_sim_molecule_dsgn_id(sim_tab, wildcards.design_id)
+    shell:
+        "python3 {config[__default__][SCRIPTS_PATH]}/smfish_generate_full_probes.py "
+        "{params.design_dir} {params.sim_primer3_dir} {params.input_target_table_filename} {params.blast_database} "
+        "{params.bot} {params.mch} {params.bplc} "
+        "-ps {params.primerset} "
+        "-bs {params.barcode_selection} "
+        "-tc {params.theme_color} "
+        # "-m {params.mch} "
+        "-bt {params.bt} "
+        "-otgc {params.otgc} "
+        "-mt {params.mt} "
+        "-ttt {params.total_transcript_table} "
+        "-mol {params.molecule} "
+        "-psl {params.psl}"
+
+
+
+rule collect_probe_coverage_results:
+    input:
+        full_length_probe_summary_list,
+        sim_input_filename = sim_input_filename,
+        data_dir = data_dir
+    output:
+        sim_output_filename
+    params:
+        pipeline_version = pipeline_version
+    threads: 1
+    shell:
+        "python3 {config[__default__][SCRIPTS_PATH]}/smfish_collect_simulation_results.py "
+        "{input.data_dir} {input.sim_input_filename} {params.pipeline_version} {output}"

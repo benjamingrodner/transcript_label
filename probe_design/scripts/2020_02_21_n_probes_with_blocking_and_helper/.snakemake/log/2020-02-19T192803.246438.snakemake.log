@@ -1,0 +1,95 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 10
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	blast_probes
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	design_probes
+	1	evaluate_taxon_probes
+	1	generate_full_probes
+	1	select_feature_probes
+	8
+
+[Wed Feb 19 19:28:09 2020]
+rule design_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/primer3/{*}.int (dynamic)
+    jobid: 6
+    wildcards: sample=sample_005
+
+Subsequent jobs will be added dynamically depending on the output of this job
+Dynamically updating jobs
+[Wed Feb 19 19:28:31 2020]
+Finished job 6.
+1 of 7 steps (14%) done
+
+[Wed Feb 19 19:28:31 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/primer3/GFP.int
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/primer3/GFP_probe_blast_complete.txt
+    jobid: 12
+    wildcards: sample=sample_005, feature=GFP
+
+[Wed Feb 19 19:31:42 2020]
+Finished job 12.
+2 of 7 steps (29%) done
+
+[Wed Feb 19 19:31:42 2020]
+rule evaluate_taxon_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/primer3/GFP.int, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/primer3/GFP_probe_blast_complete.txt
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/blast/GFP_probe_evaluation_complete.txt
+    jobid: 10
+    wildcards: sample=sample_005, feature=GFP
+
+[Wed Feb 19 19:34:32 2020]
+Finished job 10.
+3 of 7 steps (43%) done
+
+[Wed Feb 19 19:34:32 2020]
+rule select_feature_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/blast/GFP_probe_evaluation_complete.txt
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_005/GFP_probe_selection.csv
+    jobid: 9
+    wildcards: design_id=DSGN_005, feature=GFP
+
+[Wed Feb 19 19:38:19 2020]
+Finished job 9.
+4 of 7 steps (57%) done
+
+[Wed Feb 19 19:38:19 2020]
+rule collect_selected_probe_information:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/simulation_table_005.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_005, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_005/GFP_probe_selection.csv
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_005/feature_best_probes.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_005/feature_best_probes_filtered.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_005/feature_best_probes_summary.csv
+    jobid: 8
+    wildcards: design_id=DSGN_005
+
+[Wed Feb 19 19:38:21 2020]
+Finished job 8.
+5 of 7 steps (71%) done
+
+[Wed Feb 19 19:38:21 2020]
+rule generate_full_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_005/feature_best_probes.csv
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_005/full_length_probes_summary.txt
+    jobid: 2
+    wildcards: design_id=DSGN_005
+
+[Wed Feb 19 19:38:33 2020]
+Error in rule generate_full_probes:
+    jobid: 2
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_005/full_length_probes_summary.txt
+
+RuleException:
+CalledProcessError in line 385 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+Command ' set -euo pipefail;  python3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/smfish_generate_full_probes.py /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_005 /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/primer3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_005/inputs/target_table_005.csv /workdir/bmg224/hiprfish/mobile_elements/probe_design/databases/e_coli_mg1655_genomic_sense_antisense_combined/custom_blast_db.fasta 0.99 10 15 -ps B -bs MostSimple -tc black ' returned non-zero exit status 1.
+  File "/local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile", line 385, in __rule_generate_full_probes
+  File "/usr/lib64/python3.6/concurrent/futures/thread.py", line 56, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/.snakemake/log/2020-02-19T192803.246438.snakemake.log

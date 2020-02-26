@@ -1,0 +1,90 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 10
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	blast_probes
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	design_probes
+	1	evaluate_taxon_probes
+	1	generate_full_probes
+	1	select_feature_probes
+	8
+
+[Mon Feb 17 13:49:53 2020]
+rule design_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3/{*}.int (dynamic)
+    jobid: 6
+    wildcards: sample=sample_003
+
+Subsequent jobs will be added dynamically depending on the output of this job
+Dynamically updating jobs
+[Mon Feb 17 13:50:02 2020]
+Finished job 6.
+1 of 7 steps (14%) done
+
+[Mon Feb 17 13:50:02 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3/GFP.int
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3/GFP_probe_blast_complete.txt
+    jobid: 12
+    wildcards: sample=sample_003, feature=GFP
+
+[Mon Feb 17 13:53:02 2020]
+Finished job 12.
+2 of 7 steps (29%) done
+
+[Mon Feb 17 13:53:02 2020]
+rule evaluate_taxon_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3/GFP.int, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3/GFP_probe_blast_complete.txt
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/blast/GFP_probe_evaluation_complete.txt
+    jobid: 10
+    wildcards: sample=sample_003, feature=GFP
+
+[Mon Feb 17 13:55:54 2020]
+Finished job 10.
+3 of 7 steps (43%) done
+
+[Mon Feb 17 13:55:54 2020]
+rule select_feature_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/blast/GFP_probe_evaluation_complete.txt
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/GFP_probe_selection.csv
+    jobid: 9
+    wildcards: design_id=DSGN_003, feature=GFP
+
+[Mon Feb 17 13:59:58 2020]
+Finished job 9.
+4 of 7 steps (57%) done
+
+[Mon Feb 17 13:59:58 2020]
+rule collect_selected_probe_information:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/simulation_table_003.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/GFP_probe_selection.csv
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes_filtered.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes_summary.csv
+    jobid: 8
+    wildcards: design_id=DSGN_003
+
+[Mon Feb 17 13:59:59 2020]
+Finished job 8.
+5 of 7 steps (71%) done
+
+[Mon Feb 17 13:59:59 2020]
+rule generate_full_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes.csv
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/DSGN_003_full_length_probes_summary.txt
+    jobid: 2
+    wildcards: design_id=DSGN_003
+
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 352 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+Missing files after 5 seconds:
+/workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/DSGN_003_full_length_probes_summary.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/.snakemake/log/2020-02-17T134949.551189.snakemake.log

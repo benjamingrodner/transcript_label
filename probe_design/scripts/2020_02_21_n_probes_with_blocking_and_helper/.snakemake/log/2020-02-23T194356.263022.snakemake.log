@@ -1,0 +1,245 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 20
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	blast_probes
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	design_probes
+	1	evaluate_taxon_probes
+	1	generate_full_probes
+	1	select_feature_probes
+	8
+
+[Sun Feb 23 19:43:57 2020]
+rule design_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/{*}.int (dynamic)
+    jobid: 6
+    wildcards: sample=sample_001
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_design_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/inputs/sample_001.fasta /workdir/bmg224/hiprfish/transcript_label/probe_design/database/hao_zhou_mouse_gut/Total_transcripts.csv  -l 50
+Subsequent jobs will be added dynamically depending on the output of this job
+Dynamically updating jobs
+[Sun Feb 23 19:44:14 2020]
+Finished job 6.
+1 of 19 steps (5%) done
+
+[Sun Feb 23 19:44:14 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_17427_length_8966_cov_79.951633_17.int
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_17427_length_8966_cov_79.951633_17_probe_blast_complete.txt
+    jobid: 22
+    wildcards: sample=sample_001, feature=NODE_17427_length_8966_cov_79.951633_17
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_blast_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/database/hao_zhou_mouse_gut/custom_blast_db.fasta /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_17427_length_8966_cov_79.951633_17.int
+
+[Sun Feb 23 19:44:14 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_27080_length_5831_cov_248.165859_5.int
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_27080_length_5831_cov_248.165859_5_probe_blast_complete.txt
+    jobid: 23
+    wildcards: sample=sample_001, feature=NODE_27080_length_5831_cov_248.165859_5
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_blast_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/database/hao_zhou_mouse_gut/custom_blast_db.fasta /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_27080_length_5831_cov_248.165859_5.int
+
+[Sun Feb 23 19:44:14 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_42025_length_3778_cov_100.983615_3.int
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_42025_length_3778_cov_100.983615_3_probe_blast_complete.txt
+    jobid: 24
+    wildcards: sample=sample_001, feature=NODE_42025_length_3778_cov_100.983615_3
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_blast_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/database/hao_zhou_mouse_gut/custom_blast_db.fasta /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_42025_length_3778_cov_100.983615_3.int
+
+[Sun Feb 23 19:44:14 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2645_length_39440_cov_95.575905_23.int
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2645_length_39440_cov_95.575905_23_probe_blast_complete.txt
+    jobid: 20
+    wildcards: sample=sample_001, feature=NODE_2645_length_39440_cov_95.575905_23
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_blast_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/database/hao_zhou_mouse_gut/custom_blast_db.fasta /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2645_length_39440_cov_95.575905_23.int
+
+[Sun Feb 23 19:44:14 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2392_length_41855_cov_21.857512_11.int
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2392_length_41855_cov_21.857512_11_probe_blast_complete.txt
+    jobid: 21
+    wildcards: sample=sample_001, feature=NODE_2392_length_41855_cov_21.857512_11
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_blast_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/database/hao_zhou_mouse_gut/custom_blast_db.fasta /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2392_length_41855_cov_21.857512_11.int
+[Sun Feb 23 19:54:40 2020]
+Finished job 22.
+2 of 19 steps (11%) done
+
+[Sun Feb 23 19:54:40 2020]
+rule evaluate_taxon_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_17427_length_8966_cov_79.951633_17.int, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_17427_length_8966_cov_79.951633_17_probe_blast_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_17427_length_8966_cov_79.951633_17_probe_evaluation_complete.txt
+    jobid: 16
+    wildcards: sample=sample_001, feature=NODE_17427_length_8966_cov_79.951633_17
+
+python3 -W ignore /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_evaluate_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_17427_length_8966_cov_79.951633_17.int
+[Sun Feb 23 19:56:23 2020]
+Finished job 16.
+3 of 19 steps (16%) done
+
+[Sun Feb 23 19:56:23 2020]
+rule select_feature_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_17427_length_8966_cov_79.951633_17_probe_evaluation_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_17427_length_8966_cov_79.951633_17_probe_selection.csv
+    jobid: 11
+    wildcards: design_id=DSGN_001, feature=NODE_17427_length_8966_cov_79.951633_17
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/hiprfish_select_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_17427_length_8966_cov_79.951633_17_probe_evaluation_complete.txt DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_17427_length_8966_cov_79.951633_17_probe_selection.csv -tmin 58 -tmax 62 -m 12 -n 2 -gc 40 -bt 26 -bot 0.99 -otgc 8 -mt 60
+[Sun Feb 23 19:58:21 2020]
+Finished job 11.
+4 of 19 steps (21%) done
+[Sun Feb 23 19:59:21 2020]
+Finished job 23.
+5 of 19 steps (26%) done
+
+[Sun Feb 23 19:59:21 2020]
+rule evaluate_taxon_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_27080_length_5831_cov_248.165859_5.int, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_27080_length_5831_cov_248.165859_5_probe_blast_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_27080_length_5831_cov_248.165859_5_probe_evaluation_complete.txt
+    jobid: 17
+    wildcards: sample=sample_001, feature=NODE_27080_length_5831_cov_248.165859_5
+
+python3 -W ignore /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_evaluate_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_27080_length_5831_cov_248.165859_5.int
+[Sun Feb 23 20:01:18 2020]
+Finished job 17.
+6 of 19 steps (32%) done
+
+[Sun Feb 23 20:01:18 2020]
+rule select_feature_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_27080_length_5831_cov_248.165859_5_probe_evaluation_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_27080_length_5831_cov_248.165859_5_probe_selection.csv
+    jobid: 12
+    wildcards: design_id=DSGN_001, feature=NODE_27080_length_5831_cov_248.165859_5
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/hiprfish_select_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_27080_length_5831_cov_248.165859_5_probe_evaluation_complete.txt DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_27080_length_5831_cov_248.165859_5_probe_selection.csv -tmin 58 -tmax 62 -m 12 -n 2 -gc 40 -bt 26 -bot 0.99 -otgc 8 -mt 60
+[Sun Feb 23 20:04:47 2020]
+Finished job 12.
+7 of 19 steps (37%) done
+[Sun Feb 23 20:13:33 2020]
+Finished job 21.
+8 of 19 steps (42%) done
+
+[Sun Feb 23 20:13:33 2020]
+rule evaluate_taxon_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2392_length_41855_cov_21.857512_11.int, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2392_length_41855_cov_21.857512_11_probe_blast_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_2392_length_41855_cov_21.857512_11_probe_evaluation_complete.txt
+    jobid: 15
+    wildcards: sample=sample_001, feature=NODE_2392_length_41855_cov_21.857512_11
+
+python3 -W ignore /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_evaluate_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2392_length_41855_cov_21.857512_11.int
+[Sun Feb 23 20:13:35 2020]
+Finished job 20.
+9 of 19 steps (47%) done
+
+[Sun Feb 23 20:13:35 2020]
+rule evaluate_taxon_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2645_length_39440_cov_95.575905_23.int, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2645_length_39440_cov_95.575905_23_probe_blast_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_2645_length_39440_cov_95.575905_23_probe_evaluation_complete.txt
+    jobid: 14
+    wildcards: sample=sample_001, feature=NODE_2645_length_39440_cov_95.575905_23
+
+python3 -W ignore /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_evaluate_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_2645_length_39440_cov_95.575905_23.int
+[Sun Feb 23 20:13:37 2020]
+Finished job 24.
+10 of 19 steps (53%) done
+
+[Sun Feb 23 20:13:37 2020]
+rule evaluate_taxon_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_42025_length_3778_cov_100.983615_3.int, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_42025_length_3778_cov_100.983615_3_probe_blast_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_42025_length_3778_cov_100.983615_3_probe_evaluation_complete.txt
+    jobid: 18
+    wildcards: sample=sample_001, feature=NODE_42025_length_3778_cov_100.983615_3
+
+python3 -W ignore /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_evaluate_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3/NODE_42025_length_3778_cov_100.983615_3.int
+[Sun Feb 23 20:18:52 2020]
+Finished job 15.
+11 of 19 steps (58%) done
+
+[Sun Feb 23 20:18:52 2020]
+rule select_feature_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_2392_length_41855_cov_21.857512_11_probe_evaluation_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_2392_length_41855_cov_21.857512_11_probe_selection.csv
+    jobid: 10
+    wildcards: design_id=DSGN_001, feature=NODE_2392_length_41855_cov_21.857512_11
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/hiprfish_select_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_2392_length_41855_cov_21.857512_11_probe_evaluation_complete.txt DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_2392_length_41855_cov_21.857512_11_probe_selection.csv -tmin 58 -tmax 62 -m 12 -n 2 -gc 40 -bt 26 -bot 0.99 -otgc 8 -mt 60
+[Sun Feb 23 20:18:59 2020]
+Finished job 18.
+12 of 19 steps (63%) done
+
+[Sun Feb 23 20:18:59 2020]
+rule select_feature_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_42025_length_3778_cov_100.983615_3_probe_evaluation_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_42025_length_3778_cov_100.983615_3_probe_selection.csv
+    jobid: 13
+    wildcards: design_id=DSGN_001, feature=NODE_42025_length_3778_cov_100.983615_3
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/hiprfish_select_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_42025_length_3778_cov_100.983615_3_probe_evaluation_complete.txt DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_42025_length_3778_cov_100.983615_3_probe_selection.csv -tmin 58 -tmax 62 -m 12 -n 2 -gc 40 -bt 26 -bot 0.99 -otgc 8 -mt 60
+[Sun Feb 23 20:19:26 2020]
+Finished job 14.
+13 of 19 steps (68%) done
+
+[Sun Feb 23 20:19:26 2020]
+rule select_feature_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_2645_length_39440_cov_95.575905_23_probe_evaluation_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_2645_length_39440_cov_95.575905_23_probe_selection.csv
+    jobid: 9
+    wildcards: design_id=DSGN_001, feature=NODE_2645_length_39440_cov_95.575905_23
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/hiprfish_select_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/blast/NODE_2645_length_39440_cov_95.575905_23_probe_evaluation_complete.txt DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_2645_length_39440_cov_95.575905_23_probe_selection.csv -tmin 58 -tmax 62 -m 12 -n 2 -gc 40 -bt 26 -bot 0.99 -otgc 8 -mt 60
+[Sun Feb 23 20:24:50 2020]
+Finished job 10.
+14 of 19 steps (74%) done
+[Sun Feb 23 20:25:00 2020]
+Finished job 13.
+15 of 19 steps (79%) done
+[Sun Feb 23 20:25:19 2020]
+Finished job 9.
+16 of 19 steps (84%) done
+
+[Sun Feb 23 20:25:19 2020]
+rule collect_selected_probe_information:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/simulation_table_001.csv, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_2645_length_39440_cov_95.575905_23_probe_selection.csv, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_2392_length_41855_cov_21.857512_11_probe_selection.csv, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_17427_length_8966_cov_79.951633_17_probe_selection.csv, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_27080_length_5831_cov_248.165859_5_probe_selection.csv, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/NODE_42025_length_3778_cov_100.983615_3_probe_selection.csv
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/feature_best_probes.csv, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/feature_best_probes_filtered.csv, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/feature_best_probes_summary.csv
+    jobid: 8
+    wildcards: design_id=DSGN_001
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_collect_taxon_best_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/simulation_table_001.csv /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/feature_best_probes.csv /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/feature_best_probes_filtered.csv /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/feature_best_probes_summary.csv 0.99
+[Sun Feb 23 20:25:24 2020]
+Finished job 8.
+17 of 19 steps (89%) done
+
+[Sun Feb 23 20:25:24 2020]
+rule generate_full_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/feature_best_probes.csv
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/full_length_probes_summary.txt
+    jobid: 2
+    wildcards: design_id=DSGN_001
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_generate_full_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/inputs/target_table_001.csv /workdir/bmg224/hiprfish/transcript_label/probe_design/database/hao_zhou_mouse_gut/custom_blast_db.fasta 0.99 12 15 -ps B -bs MostSimple -tc black -bt 26 -otgc 8 -mt 60
+[Sun Feb 23 20:33:06 2020]
+Error in rule generate_full_probes:
+    jobid: 2
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001/full_length_probes_summary.txt
+
+RuleException:
+CalledProcessError in line 406 of /local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile:
+Command ' set -euo pipefail;  python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_generate_full_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/simulation/DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/primer3 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_23_hao_zhou_paired_16s_and_transcript/sample_001/inputs/target_table_001.csv /workdir/bmg224/hiprfish/transcript_label/probe_design/database/hao_zhou_mouse_gut/custom_blast_db.fasta 0.99 12 15 -ps B -bs MostSimple -tc black -bt 26 -otgc 8 -mt 60 ' returned non-zero exit status 1.
+  File "/local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile", line 406, in __rule_generate_full_probes
+  File "/usr/lib64/python3.6/concurrent/futures/thread.py", line 56, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/.snakemake/log/2020-02-23T194356.263022.snakemake.log

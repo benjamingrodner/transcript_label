@@ -1,0 +1,34 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 20
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	collect_probe_coverage_results
+	1	generate_full_probes
+	3
+
+[Tue Feb 25 13:23:55 2020]
+rule generate_full_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/simulation/DSGN_001/feature_best_probes.csv
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/simulation/DSGN_001/full_length_probes_summary.txt
+    jobid: 2
+    wildcards: design_id=DSGN_001
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_generate_full_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/simulation/DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/inputs/target_table_001.csv /workdir/bmg224/hiprfish/transcript_label/probe_design/database/cg_ec_coding/custom_blast_db.fasta 0.99 12 15 -ps B -bs MostSimple -tc black -bt 26 -otgc 8 -mt 60 -ttt /workdir/bmg224/hiprfish/transcript_label/probe_design/database/cg_ec_coding/custom_blast_db.fasta -mol RNA -psl molecule
+[Tue Feb 25 13:24:44 2020]
+Error in rule generate_full_probes:
+    jobid: 2
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/simulation/DSGN_001/full_length_probes_summary.txt
+
+RuleException:
+CalledProcessError in line 462 of /local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile:
+Command ' set -euo pipefail;  python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_generate_full_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/simulation/DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/inputs/target_table_001.csv /workdir/bmg224/hiprfish/transcript_label/probe_design/database/cg_ec_coding/custom_blast_db.fasta 0.99 12 15 -ps B -bs MostSimple -tc black -bt 26 -otgc 8 -mt 60 -ttt /workdir/bmg224/hiprfish/transcript_label/probe_design/database/cg_ec_coding/custom_blast_db.fasta -mol RNA -psl molecule ' returned non-zero exit status 1.
+  File "/local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile", line 462, in __rule_generate_full_probes
+  File "/usr/lib64/python3.6/concurrent/futures/thread.py", line 56, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/.snakemake/log/2020-02-25T132350.612745.snakemake.log

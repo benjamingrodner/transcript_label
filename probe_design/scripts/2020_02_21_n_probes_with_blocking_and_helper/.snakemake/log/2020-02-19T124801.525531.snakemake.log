@@ -1,0 +1,7 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+InputFunctionException in line 358 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+TypeError: get_target_table_filename() missing 1 required positional argument: 'feature'
+Wildcards:
+design_id=DSGN_004

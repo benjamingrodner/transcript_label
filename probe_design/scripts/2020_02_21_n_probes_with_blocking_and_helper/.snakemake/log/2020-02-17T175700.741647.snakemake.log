@@ -1,0 +1,37 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 10
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	generate_full_probes
+	1	select_feature_probes
+	5
+
+[Mon Feb 17 17:57:04 2020]
+rule select_feature_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/blast/GFP_probe_evaluation_complete.txt
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/GFP_probe_selection.csv
+    jobid: 9
+    wildcards: design_id=DSGN_003, feature=GFP
+
+[Mon Feb 17 18:02:33 2020]
+Error in rule select_feature_probes:
+    jobid: 9
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/GFP_probe_selection.csv
+
+RuleException:
+CalledProcessError in line 308 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+Command ' set -euo pipefail;  python3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/hiprfish_select_probes.py /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/blast/GFP_probe_evaluation_complete.txt DSGN_003 /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/GFP_probe_selection.csv -tmin 58 -tmax 62 -m 10 -n 20 -gc 40 -bot 0.99 ' returned non-zero exit status 1.
+  File "/local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile", line 308, in __rule_select_feature_probes
+  File "/usr/lib64/python3.6/concurrent/futures/thread.py", line 56, in run
+Removing output files of failed job select_feature_probes since they might be corrupted:
+/workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/GFP_probe_selection.csv
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/.snakemake/log/2020-02-17T175700.741647.snakemake.log

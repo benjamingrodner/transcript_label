@@ -1,0 +1,8 @@
+#!/bin/bash
+# blastn_nt
+# Ben Grodner
+# Purpose: Generate reverse compliment of genomic database and add both databases to new database
+
+# grep -B1 -Eiv $STRING$2 $1 | grep -v '^--' > $3
+grep -i ">|g" $1 |
+while read L; do if [[ $L =~ ^">" ]]; then echo "$L"; else echo $L | rev | tr "ATGCatgc" "TACGtacg"; fi; done

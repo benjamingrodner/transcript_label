@@ -1,0 +1,40 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 10
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	generate_full_probes
+	4
+
+[Mon Feb 17 18:47:37 2020]
+rule collect_selected_probe_information:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/simulation_table_003.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/GFP_probe_selection.csv
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes_filtered.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes_summary.csv
+    jobid: 8
+    wildcards: design_id=DSGN_003
+
+[Mon Feb 17 18:47:41 2020]
+Finished job 8.
+1 of 4 steps (25%) done
+
+[Mon Feb 17 18:47:41 2020]
+rule generate_full_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/feature_best_probes.csv
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/DSGN_003_full_length_probes_summary.txt
+    jobid: 2
+    wildcards: design_id=DSGN_003
+
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 352 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+Missing files after 5 seconds:
+/workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_003/DSGN_003_full_length_probes_summary.txt
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/.snakemake/log/2020-02-17T184732.412020.snakemake.log

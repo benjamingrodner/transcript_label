@@ -1,0 +1,74 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 20
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	2	blast_probes
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	2	evaluate_taxon_probes
+	1	generate_full_probes
+	2	select_feature_probes
+	10
+
+[Tue Feb 25 10:49:58 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/lcl_U00096.3_cds_AAC76428.1_3381.int
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/lcl_U00096.3_cds_AAC76428.1_3381_probe_blast_complete.txt
+    jobid: 15
+    wildcards: sample=sample_001, feature=lcl_U00096.3_cds_AAC76428.1_3381
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_blast_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/database/cg_ec_coding/custom_blast_db.fasta /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/lcl_U00096.3_cds_AAC76428.1_3381.int
+
+[Tue Feb 25 10:49:58 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/lcl_BA000036.3_cds_BAB99344.1_1951.int
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/lcl_BA000036.3_cds_BAB99344.1_1951_probe_blast_complete.txt
+    jobid: 14
+    wildcards: sample=sample_001, feature=lcl_BA000036.3_cds_BAB99344.1_1951
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_blast_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/database/cg_ec_coding/custom_blast_db.fasta /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/lcl_BA000036.3_cds_BAB99344.1_1951.int
+[Tue Feb 25 10:56:54 2020]
+Finished job 14.
+1 of 10 steps (10%) done
+
+[Tue Feb 25 10:56:54 2020]
+rule evaluate_taxon_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/lcl_BA000036.3_cds_BAB99344.1_1951.int, /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/lcl_BA000036.3_cds_BAB99344.1_1951_probe_blast_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/blast/lcl_BA000036.3_cds_BAB99344.1_1951_probe_evaluation_complete.txt
+    jobid: 11
+    wildcards: sample=sample_001, feature=lcl_BA000036.3_cds_BAB99344.1_1951
+
+python3 -W ignore /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_evaluate_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/lcl_BA000036.3_cds_BAB99344.1_1951.int
+[Tue Feb 25 11:01:22 2020]
+Finished job 11.
+2 of 10 steps (20%) done
+
+[Tue Feb 25 11:01:22 2020]
+rule select_feature_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/blast/lcl_BA000036.3_cds_BAB99344.1_1951_probe_evaluation_complete.txt
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/simulation/DSGN_001/lcl_BA000036.3_cds_BAB99344.1_1951_probe_selection.csv
+    jobid: 9
+    wildcards: design_id=DSGN_001, feature=lcl_BA000036.3_cds_BAB99344.1_1951
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/hiprfish_select_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/blast/lcl_BA000036.3_cds_BAB99344.1_1951_probe_evaluation_complete.txt DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/simulation/DSGN_001/lcl_BA000036.3_cds_BAB99344.1_1951_probe_selection.csv -tmin 58 -tmax 62 -m 12 -n 2 -gc 40 -bt 26 -bot 0.99 -otgc 8 -mt 60 -psl molecule -ttt /workdir/bmg224/hiprfish/transcript_label/probe_design/database/cg_ec_coding/custom_blast_db.fasta
+[Tue Feb 25 11:01:37 2020]
+Error in rule select_feature_probes:
+    jobid: 9
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/simulation/DSGN_001/lcl_BA000036.3_cds_BAB99344.1_1951_probe_selection.csv
+
+RuleException:
+CalledProcessError in line 379 of /local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile:
+Command ' set -euo pipefail;  python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/hiprfish_select_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/blast/lcl_BA000036.3_cds_BAB99344.1_1951_probe_evaluation_complete.txt DSGN_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/simulation/DSGN_001/lcl_BA000036.3_cds_BAB99344.1_1951_probe_selection.csv -tmin 58 -tmax 62 -m 12 -n 2 -gc 40 -bt 26 -bot 0.99 -otgc 8 -mt 60 -psl molecule -ttt /workdir/bmg224/hiprfish/transcript_label/probe_design/database/cg_ec_coding/custom_blast_db.fasta ' returned non-zero exit status 1.
+  File "/local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile", line 379, in __rule_select_feature_probes
+  File "/usr/lib64/python3.6/concurrent/futures/thread.py", line 56, in run
+[Tue Feb 25 11:02:05 2020]
+Finished job 15.
+3 of 10 steps (30%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/.snakemake/log/2020-02-25T104956.092959.snakemake.log

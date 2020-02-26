@@ -1,0 +1,7 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+InputFunctionException in line 352 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+AttributeError: 'Wildcards' object has no attribute 'sample'
+Wildcards:
+design_id=DSGN_001

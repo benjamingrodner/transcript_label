@@ -1,0 +1,39 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 20
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	blast_probes
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	design_probes
+	1	evaluate_taxon_probes
+	1	generate_full_probes
+	1	select_feature_probes
+	8
+
+[Thu Feb 20 13:38:07 2020]
+rule design_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_008
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_008/primer3/{*}.int (dynamic)
+    jobid: 6
+    wildcards: sample=sample_008
+
+Subsequent jobs will be added dynamically depending on the output of this job
+[Thu Feb 20 13:38:12 2020]
+Error in rule design_probes:
+    jobid: 6
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_008/primer3/{*}.int (dynamic)
+
+RuleException:
+CalledProcessError in line 270 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+Command ' set -euo pipefail;  python3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/smfish_design_probes.py /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_008/inputs/GFP.fasta /workdir/bmg224/hiprfish/mobile_elements/probe_design/databases/e_coli_mg1655_coding/e_coli_coding_sequences.fasta -l 50 ' returned non-zero exit status 1.
+  File "/local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile", line 270, in __rule_design_probes
+  File "/usr/lib64/python3.6/concurrent/futures/thread.py", line 56, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/.snakemake/log/2020-02-20T133758.378038.snakemake.log

@@ -1,0 +1,40 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 20
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	blast_probes
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	design_probes
+	1	evaluate_taxon_probes
+	1	generate_full_probes
+	1	select_feature_probes
+	8
+
+[Mon Feb 24 18:34:14 2020]
+rule design_probes:
+    input: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/{*}.int (dynamic)
+    jobid: 6
+    wildcards: sample=sample_001
+
+python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_design_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/database/cg_ec_coding -l 50 -fnid False -mol RNA 
+Subsequent jobs will be added dynamically depending on the output of this job
+[Mon Feb 24 18:34:37 2020]
+Error in rule design_probes:
+    jobid: 6
+    output: /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001/primer3/{*}.int (dynamic)
+
+RuleException:
+CalledProcessError in line 317 of /local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile:
+Command ' set -euo pipefail;  python3 /workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/smfish_design_probes.py /workdir/bmg224/hiprfish/transcript_label/probe_design/runs/2020_02_24_ec_cg_transcript/sample_001 /workdir/bmg224/hiprfish/transcript_label/probe_design/database/cg_ec_coding -l 50 -fnid False -mol RNA ' returned non-zero exit status 1.
+  File "/local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile", line 317, in __rule_design_probes
+  File "/usr/lib64/python3.6/concurrent/futures/thread.py", line 56, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/.snakemake/log/2020-02-24T183413.183688.snakemake.log

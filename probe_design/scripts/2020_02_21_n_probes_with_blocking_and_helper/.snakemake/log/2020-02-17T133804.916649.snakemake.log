@@ -1,0 +1,36 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 10
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	blast_probes
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	evaluate_taxon_probes
+	1	generate_full_probes
+	1	select_feature_probes
+	7
+
+[Mon Feb 17 13:38:08 2020]
+rule blast_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3/GFP.int
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3/GFP_probe_blast_complete.txt
+    jobid: 12
+    wildcards: sample=sample_003, feature=GFP
+
+Terminating processes on user request, this might take some time.
+[Mon Feb 17 13:38:15 2020]
+Error in rule blast_probes:
+    jobid: 12
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3/GFP_probe_blast_complete.txt
+
+RuleException:
+CalledProcessError in line 269 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+Command ' set -euo pipefail;  python3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/smfish_blast_probes.py /workdir/bmg224/hiprfish/mobile_elements/probe_design/databases/e_coli_mg1655/custom_blast_db.fasta /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_003/primer3/GFP.int ' returned non-zero exit status 1.
+  File "/local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile", line 269, in __rule_blast_probes
+  File "/usr/lib64/python3.6/concurrent/futures/thread.py", line 56, in run
+Complete log: /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/.snakemake/log/2020-02-17T133804.916649.snakemake.log

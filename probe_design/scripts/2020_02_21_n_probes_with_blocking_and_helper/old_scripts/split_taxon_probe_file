@@ -1,0 +1,23 @@
+#!/bin/bash
+# split_taxon_probe_file
+# Ben Grodner
+# Purpose: take a Primer3 output table with probes and convert into a fasta file
+cd $2
+# Extract info from the strange table using the number(space)sequnce pattern
+grep -Eo '[0-9]+\s[A-Za-z]+' ../../../../$1 |
+# grep -Eo '[0-9]+\s[A-Za-z]+' ../../$1 |
+# Get only the sequences
+grep -Eo '[A-Za-z]+'|
+# Convert to reverse compliment
+rev |
+tr "ATGCatgc" "TACGtacg" |
+# Assign numbers to each line (probe)
+grep -n '^' |
+# Add fasta ">" to each line
+sed -E 's/([0-9]+)/>\1/g' |
+# Separate probe number(name) by a newline
+tr ':' '\n' > ../../../../$3
+# # Split each probe into its own fasta file
+# awk '/^>/ {close(OUT); OUT=substr($0,2) ".fasta"}; OUT {print >OUT}'
+cd ../../../../
+# cd ../../

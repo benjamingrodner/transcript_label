@@ -1,0 +1,43 @@
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Dynamic output is deprecated in favor of checkpoints (see docs). It will be removed in Snakemake 6.0.
+Building DAG of jobs...
+Job counts:
+	count	jobs
+	1	all
+	1	blast_probes
+	1	collect_probe_coverage_results
+	1	collect_selected_probe_information
+	1	design_probes
+	1	evaluate_taxon_probes
+	1	generate_full_probes
+	1	select_feature_probes
+	8
+
+[Thu Feb 13 17:58:45 2020]
+rule design_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_001
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_001/primer3/{*}.int (dynamic)
+    jobid: 6
+    wildcards: sample=sample_001
+
+python3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/smfish_design_probes.py /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_001/inputs/GFP.fasta /workdir/bmg224/hiprfish/mobile_elements/probe_design/databases/e_coli_mg1655/GCF_000005845.2_ASM584v2_genomic.fna -l 50
+Subsequent jobs will be added dynamically depending on the output of this job
+
+[Thu Feb 13 17:58:45 2020]
+rule collect_selected_probe_information:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_001/simulation_table_001.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001/{*}_probe_selection.csv (dynamic)
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001/feature_best_probes.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001/feature_best_probes_filtered.csv, /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001/feature_best_probes_summary.csv
+    jobid: 3
+    wildcards: design_id=DSGN_001
+
+python3 /workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/smfish_collect_taxon_best_probes.py /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001 /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/sample_001/simulation_table_001.csv /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001/feature_best_probes.csv /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001/feature_best_probes_filtered.csv /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001/feature_best_probes_summary.csv 0.99
+
+[Thu Feb 13 17:58:45 2020]
+rule generate_full_probes:
+    input: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001/feature_best_probes.csv
+    output: /workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation/DSGN_001/DSGN_001_full_length_probes_summary.txt
+    jobid: 2
+    wildcards: design_id=DSGN_001
+
+RuleException in line 352 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+'Params' object has no attribute 'input_target_table_filename'

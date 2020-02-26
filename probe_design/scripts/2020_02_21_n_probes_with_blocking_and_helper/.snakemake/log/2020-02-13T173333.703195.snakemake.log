@@ -1,0 +1,11 @@
+FileNotFoundError in line 22 of /local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile:
+[Errno 2] File b'/workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation_table_001.csv' does not exist: b'/workdir/bmg224/hiprfish/mobile_elements/probe_design/runs/2020_02_13_gfp_plasmid/simulation_table_001.csv'
+  File "/local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile", line 221, in <module>
+  File "/local/workdir/bmg224/hiprfish/mobile_elements/probe_design/scripts/Snakefile", line 22, in get_simulation_list
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pandas/io/parsers.py", line 702, in parser_f
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pandas/io/parsers.py", line 429, in _read
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pandas/io/parsers.py", line 895, in __init__
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pandas/io/parsers.py", line 1122, in _make_engine
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pandas/io/parsers.py", line 1853, in __init__
+  File "pandas/_libs/parsers.pyx", line 387, in pandas._libs.parsers.TextReader.__cinit__
+  File "pandas/_libs/parsers.pyx", line 705, in pandas._libs.parsers.TextReader._setup_parser_source

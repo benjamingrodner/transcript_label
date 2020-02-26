@@ -1,0 +1,24 @@
+#!/bin/bash
+# blastn_nt
+# Ben Grodner
+# Purpose: notes to blast against the nt database
+
+# Blast remotely against nt
+blastn -db nt -query test_probes/test_probe.fasta -out test_blast_results/test_blast_results.out -remote
+
+# Get the ftp folder for dh5alpha e.coli
+rsync --copy-links --recursive --times --verbose rsync://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/982/435/GCA_000982435.1_ASM98243v1/* databases/dh5alpha/
+# Unzip database files for dh5alpha
+gunzip databases/dh5alpha/GCA_000982435.1_ASM98243v1/GCA_000982435.1_ASM98243v1_genomic.fna.gz
+# make a blast database
+makeblastdb -in databases/dh5alpha/GCA_000982435.1_ASM98243v1/*genomic.fna -dbtype nucl -parse_seqids
+# blast against dh5alpha locally
+blastn -db databases/dh5alpha/GCA_000982435.1_ASM98243v1/*genomic.fna -query test_probes/test_probe.fasta -task "blastn-short" -out test_blast_results/test_blast_results.out
+
+
+# Get the ftp file for nt database
+rsync --copy-links --times --verbose rsync://ftp.ncbi.nlm.nih.gov/blast/db/nt.85.tar.gz databases/nt/
+# Unzip database files for nt
+tar xvzf databases/nt/nt.85.tar.gz
+# Blast locally against nt
+blastn -db databases/nt -query test_probes/test_probe.fasta -out test_blast_results/test_blast_results.out

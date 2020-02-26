@@ -1,0 +1,17 @@
+KeyboardInterrupt in line 5 of /local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile.
+  File "/local/workdir/bmg224/hiprfish/transcript_label/probe_design/scripts/2020_02_21_n_probes_with_blocking_and_helper/Snakefile", line 5, in <module>
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pandas/__init__.py", line 26, in <module>
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pandas/_libs/__init__.py", line 4, in <module>
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pandas/_libs/tslibs/__init__.py", line 4, in <module>
+  File "pandas/_libs/tslibs/conversion.pyx", line 1, in init pandas._libs.tslibs.conversion
+  File "pandas/_libs/tslibs/timedeltas.pyx", line 1, in init pandas._libs.tslibs.timedeltas
+  File "pandas/_libs/tslibs/offsets.pyx", line 1, in init pandas._libs.tslibs.offsets
+  File "pandas/_libs/tslibs/ccalendar.pyx", line 12, in init pandas._libs.tslibs.ccalendar
+  File "pandas/_libs/tslibs/strptime.pyx", line 591, in init pandas._libs.tslibs.strptime
+  File "pandas/_libs/tslibs/strptime.pyx", line 534, in pandas._libs.tslibs.strptime.TimeRE.__init__
+  File "pandas/_libs/tslibs/strptime.pyx", line 550, in pandas._libs.tslibs.strptime.TimeRE.__seqToRE
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pytz/lazy.py", line 101, in _lazy
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pytz/__init__.py", line 1082, in <genexpr>
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pytz/__init__.py", line 114, in resource_exists
+  File "/home/bmg224/.local/lib/python3.6/site-packages/pytz/__init__.py", line 97, in open_resource
+  File "/usr/lib64/python3.6/genericpath.py", line 19, in exists
